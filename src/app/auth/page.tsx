@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
 import { useRouter } from 'next/navigation'
@@ -46,8 +47,15 @@ const AuthPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-cream text-gray-600">
-      <h1 className="text-3xl font-bold text-mint pb-24">SA NOSTRA CUINA</h1>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 mb-24">
+      <h1 className="text-3xl font-bold text-mint ">SA NOSTRA CUINA</h1>
+      <Image
+        src="/images/logo_sa_nostra_cuina.png"
+        alt="Descripción de la imagen"
+        className="pb-20 pt-4"
+        height={100}
+        width={100}
+      />
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 mb-36">
         {/* Tabs */}
         <div className="flex justify-between mb-6">
           <button
