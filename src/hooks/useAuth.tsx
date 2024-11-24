@@ -8,19 +8,15 @@ import { useRouter, usePathname } from 'next/navigation'
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
-  const pathname = usePathname() // Saber en qué ruta estamos
+  const pathname = usePathname()
 
   useEffect(() => {
     const fetchUser = async () => {
       const { data } = await supabase.auth.getSession()
       setUser(data.session?.user || null)
 
-      if (
-        !data.session?.user &&
-        pathname !== '/login' &&
-        pathname !== '/signup'
-      ) {
-        router.replace('/login')
+      if (!data.session?.user && pathname !== '/auth') {
+        router.replace('/auth')
       }
     }
     fetchUser()
@@ -30,8 +26,8 @@ const useAuth = () => {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null)
 
-      if (!session?.user && pathname !== '/login' && pathname !== '/signup') {
-        router.replace('/login')
+      if (!session?.user && pathname !== '/auth') {
+        router.replace('/auth')
       }
     })
 
@@ -46,7 +42,7 @@ const useAuth = () => {
       console.error('Error al cerrar sesión:', error.message)
     } else {
       setUser(null)
-      router.replace('/login')
+      router.replace('/auth')
     }
   }
 

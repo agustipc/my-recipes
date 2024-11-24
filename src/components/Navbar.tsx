@@ -8,7 +8,7 @@ const Navbar = () => {
       {user ? (
         <button onClick={logout}>Cerrar Sesión</button>
       ) : (
-        <a href="/login">Iniciar Sesión</a>
+        <a href="/auth">Iniciar Sesión</a>
       )}
     </nav>
   )
