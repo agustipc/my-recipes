@@ -51,7 +51,7 @@ const AuthPage = () => {
       <Image
         src="/images/logo_sa_nostra_cuina.png"
         alt="Descripción de la imagen"
-        className="pb-20 pt-4"
+        className="pb-20 pt-2"
         height={100}
         width={100}
       />
