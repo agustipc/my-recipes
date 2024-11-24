@@ -1,7 +1,35 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.themodernproper.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.squarespace-cdn.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.lavanguardia.com',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.allrecipes.com',
+        pathname: '/**'
+      }
+    ]
+  }
+}
 
-export default nextConfig;
+export default nextConfig

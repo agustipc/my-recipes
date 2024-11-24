@@ -1,6 +1,8 @@
 'use client'
 
+import RecipeCard from '@/components/RecipeCard'
 import useAuth from '../hooks/useAuth'
+import { exampleRecipes } from '@/data/mockRecipes'
 
 const HomePage = () => {
   const { user, logout } = useAuth()
@@ -9,7 +11,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-cream flex flex-col">
       {/* Navbar */}
       <nav className="flex items-center justify-between p-6 bg-white shadow-md">
-        <h1 className="text-xl font-bold text-mint">My Recipes</h1>
+        <h1 className="text-xl font-bold text-mint">Sa nostra cuina</h1>
         <div>
           {user && (
             <>
@@ -25,27 +27,32 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="flex flex-col items-center justify-center flex-grow p-8">
-        <div className="p-6 bg-white rounded shadow-md w-full max-w-lg text-center">
-          <h2 className="text-2xl font-semibold text-mint mb-4">
-            Bienvenido a My Recipes
-          </h2>
-          <p className="text-gray-600 mb-4">
-            Aquí puedes explorar recetas deliciosas y compartir tus favoritas.
-          </p>
-          {user ? (
-            <p className="text-gray-600">
-              Disfruta personalizando tu experiencia y creando tus propias
-              recetas.
-            </p>
-          ) : (
-            <p className="text-gray-600">
-              Inicia sesión para guardar tus recetas favoritas y más.
-            </p>
-          )}
-        </div>
+      {/* Bienvenida */}
+      <header className="flex flex-col items-center justify-center bg-mint text-gray-600 shadow-md rounded mx-6 my-4 p-8 text-center">
+        <h2 className="text-4xl font-bold mb-4">
+          Bienvenido a Sa nostra cuina
+        </h2>
+        <p className="text-lg mb-4">
+          Encuentra y comparte recetas deliciosas para toda la familia.
+        </p>
+        <input
+          type="text"
+          placeholder="Busca una receta..."
+          className="w-full max-w-md px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-peach"
+        />
+      </header>
+
+      {/* Grid de recetas */}
+      <main className="grid gap-6 p-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+        {exampleRecipes.map((recipe) => (
+          <RecipeCard key={recipe.id} {...recipe} />
+        ))}
       </main>
+
+      {/* Footer */}
+      <footer className="mt-12 text-center py-4 bg-gray-200">
+        <p className="text-gray-600 text-sm">© 2024 Sa nostra cuina.</p>
+      </footer>
     </div>
   )
 }

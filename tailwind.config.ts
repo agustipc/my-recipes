@@ -16,7 +16,10 @@ export default {
         pastelYellow: '#FFF4B9',
         softBlue: '#BFD8E5',
         cream: '#FFF8E7',
-        lightGray: '#C4C4C4'
+        gray: {
+          200: '#e5e5e5',
+          600: '#4b5563'
+        }
       }
     }
   },
