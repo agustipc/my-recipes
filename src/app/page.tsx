@@ -3,6 +3,7 @@
 import RecipeCard from '@/components/RecipeCard'
 import useAuth from '../hooks/useAuth'
 import { exampleRecipes } from '@/data/mockRecipes'
+import Image from 'next/image'
 
 const HomePage = () => {
   const { user, logout } = useAuth()
@@ -11,7 +12,15 @@ const HomePage = () => {
     <div className="min-h-screen bg-cream flex flex-col">
       {/* Navbar */}
       <nav className="flex items-center justify-between p-6 bg-white shadow-md">
-        <h1 className="text-xl font-bold text-mint">Sa nostra cuina</h1>
+        <div className="flex flex-row gap-4 items-center">
+          <Image
+            src="/images/logo_sa_nostra_cuina.png"
+            alt="Logo sa nostra cuina"
+            height={32}
+            width={32}
+          />
+          <h1 className="text-2xl font-bold text-mint">Sa nostra cuina</h1>
+        </div>
         <div>
           {user && (
             <>

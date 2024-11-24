@@ -50,7 +50,7 @@ const AuthPage = () => {
       <h1 className="text-3xl font-bold text-mint ">SA NOSTRA CUINA</h1>
       <Image
         src="/images/logo_sa_nostra_cuina.png"
-        alt="Descripción de la imagen"
+        alt="Logo sa nostra cuina"
         className="pb-20 pt-2"
         height={100}
         width={100}
@@ -83,6 +83,18 @@ const AuthPage = () => {
         {/* Contenido dinámico */}
         {isLoginTab ? (
           <form onSubmit={handleLogin} className="space-y-4">
+            <input
+              type="email"
+              name="hidden-email"
+              autoComplete="username"
+              style={{ display: 'none' }}
+            />
+            <input
+              type="password"
+              name="hidden-password"
+              autoComplete="new-password"
+              style={{ display: 'none' }}
+            />
             <div>
               <label className="block text-gray-700">Correo</label>
               <input
@@ -111,7 +123,7 @@ const AuthPage = () => {
               disabled={!loginEmail || !loginPassword}
               className={`w-full py-2 rounded ${
                 loginEmail && loginPassword
-                  ? 'bg-peach text-white hover:bg-opacity-80'
+                  ? 'bg-peach text-gray-700 hover:bg-opacity-80'
                   : 'bg-gray-300 text-gray-600 cursor-not-allowed'
               }`}
             >
@@ -120,6 +132,18 @@ const AuthPage = () => {
           </form>
         ) : (
           <form onSubmit={handleSignup} className="space-y-4">
+            <input
+              type="email"
+              name="hidden-signup-email"
+              autoComplete="username"
+              style={{ display: 'none' }}
+            />
+            <input
+              type="password"
+              name="hidden-signup-password"
+              autoComplete="new-password"
+              style={{ display: 'none' }}
+            />
             <div>
               <label className="block text-gray-700">Correo</label>
               <input
@@ -150,7 +174,7 @@ const AuthPage = () => {
               disabled={!signupEmail || !signupPassword}
               className={`w-full py-2 rounded ${
                 signupEmail && signupPassword
-                  ? 'bg-peach text-white hover:bg-opacity-80'
+                  ? 'bg-peach text-gray-700 hover:bg-opacity-80'
                   : 'bg-gray-300 text-gray-600 cursor-not-allowed'
               }`}
             >
