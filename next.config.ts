@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.allrecipes.com',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.hola.com',
+        pathname: '/**'
       }
     ]
   }
