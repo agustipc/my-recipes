@@ -6,7 +6,7 @@ export const exampleRecipes: Recipe[] = [
     title: 'Tarta de Manzana',
     description: 'Una deliciosa tarta de manzana con un toque de canela.',
     image_url:
-      'https://images.themodernproper.com/billowy-turkey/production/posts/2022/ApplePie_12.jpg?w=960&h=720&q=82&fm=jpg&fit=crop&dm=1663188225&s=ada14fe8039384ea33664aab4690f1a0',
+      'https://www.hola.com/horizon/landscape/3f40d4998fc3-tarta-manzan-arguinano-t.jpg?im=Resize=(960),type=downsize',
     ingredients: [
       { name: 'Manzanas', quantity: '4 unidades' },
       { name: 'Harina', quantity: '200g' },
