@@ -4,10 +4,11 @@ import Image from 'next/image'
 import useAuth from '../hooks/useAuth'
 import { exampleRecipes } from '../data/mockRecipes'
 import RecipeCard from '../components/RecipeCard'
+import { useRouter } from '../../i18n/navigation'
 
 const HomePage = () => {
   const { user, logout } = useAuth()
-
+  const router = useRouter()
   return (
     <div className="font-sans min-h-screen bg-cream flex flex-col">
       {/* Navbar */}
@@ -22,7 +23,7 @@ const HomePage = () => {
           <h1 className="text-2xl font-bold text-mint">Sa nostra cuina</h1>
         </div>
         <div>
-          {user && (
+          {user ? (
             <>
               <span className="mr-4 text-gray-600">Hola, {user.email}</span>
               <button
@@ -32,6 +33,13 @@ const HomePage = () => {
                 Cerrar Sesión
               </button>
             </>
+          ) : (
+            <button
+              onClick={() => router.push('/auth')}
+              className="px-4 py-2 text-white bg-mint rounded hover:bg-opacity-80 focus:outline-none"
+            >
+              Iniciar Sesión
+            </button>
           )}
         </div>
       </nav>
