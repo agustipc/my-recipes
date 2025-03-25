@@ -1,15 +1,15 @@
 'use client'
 
-import RecipeCard from '@/components/RecipeCard'
-import useAuth from '../hooks/useAuth'
-import { exampleRecipes } from '@/data/mockRecipes'
 import Image from 'next/image'
+import useAuth from '../hooks/useAuth'
+import { exampleRecipes } from '../data/mockRecipes'
+import RecipeCard from '../components/RecipeCard'
 
 const HomePage = () => {
   const { user, logout } = useAuth()
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <div className="font-sans min-h-screen bg-cream flex flex-col">
       {/* Navbar */}
       <nav className="flex items-center justify-between p-6 bg-white shadow-md">
         <div className="flex flex-row gap-4 items-center">
