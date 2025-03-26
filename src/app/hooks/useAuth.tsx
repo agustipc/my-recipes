@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { getSupabaseClient } from '../lib/supabaseClient'
 import { useAuthContext } from '../context/authContext'
 import { useRouter } from '../../i18n/navigation'
+import toast from 'react-hot-toast'
 
 const useAuth = () => {
   const { state, dispatch } = useAuthContext()
@@ -66,6 +67,7 @@ const useAuth = () => {
     if (error) {
       console.error('Error al cerrar sesión:', error.message)
     } else {
+      document.cookie = `is_logged_in=false; path=/; SameSite=Lax`
       dispatch({ type: 'CLEAR_USER' })
     }
   }
@@ -89,13 +91,17 @@ const useAuth = () => {
     if (!supabase) throw new Error('Supabase client not available')
     const { data, error } = await supabase?.auth.signUp({
       email,
-      password
+      password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
+      }
     })
 
     if (error) throw error
-    if (data.session?.user) {
-      dispatch({ type: 'SET_USER', payload: data.session.user })
-      router.replace('/')
+    if (data.user && !data.session) {
+      toast.success('Revisa tu correo para confirmar tu cuenta', {
+        duration: 8000
+      })
     }
   }
 

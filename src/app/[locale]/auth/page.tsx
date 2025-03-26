@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import useAuth from '@/app/hooks/useAuth'
+import { Toaster } from 'react-hot-toast'
 
 const AuthPage = () => {
   const [isLoginTab, setIsLoginTab] = useState(true)
@@ -35,6 +36,9 @@ const AuthPage = () => {
 
     try {
       await signup(signupEmail, signupPassword)
+      setSignupEmail('')
+      setSignupPassword('')
+      setIsLoginTab(true)
     } catch (error) {
       console.error(error)
       setSignupError('Error al registrar usuario')
@@ -43,6 +47,7 @@ const AuthPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-cream text-gray-600">
+      <Toaster />
       <h1 className="text-3xl font-bold text-mint ">SA NOSTRA CUINA</h1>
       <Image
         src="/images/logo_sa_nostra_cuina.png"
