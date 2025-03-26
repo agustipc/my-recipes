@@ -1,15 +1,23 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import createMiddleware from 'next-intl/middleware'
+import { routing } from './i18n/routing'
+import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(req: NextRequest) {
-  const isLogged = req.cookies.get('is_logged_in')?.value
+const handleI18nRouting = createMiddleware(routing)
 
-  if (isLogged === 'true' && req.nextUrl.pathname.includes('/auth')) {
-    const locale = req.nextUrl.pathname.split('/')[1]
-    return NextResponse.redirect(new URL(`/${locale}`, req.url))
+export async function middleware(request: NextRequest) {
+  const isLoggedIn = request.cookies.get('is_logged_in')?.value === 'true'
+  const { pathname } = request.nextUrl
+  const locale = pathname.split('/')[1]
+
+  if (!isLoggedIn && pathname.startsWith(`/${locale}/admin`)) {
+    return NextResponse.redirect(new URL(`/${locale}/auth`, request.url))
   }
 
-  return NextResponse.next()
+  if (isLoggedIn && pathname.startsWith(`/${locale}/auth`)) {
+    return NextResponse.redirect(new URL(`/${locale}`, request.url))
+  }
+
+  return handleI18nRouting(request)
 }
 
 export const config = {
