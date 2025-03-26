@@ -13,6 +13,7 @@ export default {
         mono: ['var(--font-geist-mono)']
       },
       colors: {
+        oliveGreen: '#9fb895',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         peach: '#FAD4C0',

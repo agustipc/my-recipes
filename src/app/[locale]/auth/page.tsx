@@ -46,24 +46,26 @@ const AuthPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-cream text-gray-600">
+    <div className="flex flex-col items-center min-h-screen bg-cream text-gray-600 pt-20">
       <Toaster />
-      <h1 className="text-3xl font-bold text-mint ">SA NOSTRA CUINA</h1>
+      <h1 className="text-3xl font-bold text-oliveGreen pb-2">
+        SA NOSTRA CUINA
+      </h1>
       <Image
-        src="/images/logo_sa_nostra_cuina.png"
+        src="/images/sa_nostra_cuina_logo_squared.png"
         alt="Logo sa nostra cuina"
-        className="pb-20 pt-2"
-        height={100}
-        width={100}
+        className="rounded-lg"
+        height={150}
+        width={150}
       />
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 mb-36">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 mb-36 mt-20">
         {/* Tabs */}
         <div className="flex justify-between mb-6">
           <button
             onClick={() => setIsLoginTab(true)}
             className={`w-1/2 py-2 text-center font-bold ${
               isLoginTab
-                ? 'text-mint border-b-2 border-mint'
+                ? 'text-oliveGreen border-b-2 border-oliveGreen'
                 : 'text-gray-400 border-b'
             }`}
           >
@@ -73,7 +75,7 @@ const AuthPage = () => {
             onClick={() => setIsLoginTab(false)}
             className={`w-1/2 py-2 text-center font-bold ${
               !isLoginTab
-                ? 'text-mint border-b-2 border-mint'
+                ? 'text-oliveGreen border-b-2 border-oliveGreen'
                 : 'text-gray-400 border-b'
             }`}
           >

@@ -15,12 +15,15 @@ const HomePage = () => {
       <nav className="flex items-center justify-between p-6 bg-white shadow-md">
         <div className="flex flex-row gap-4 items-center">
           <Image
-            src="/images/logo_sa_nostra_cuina.png"
+            className="rounded-md"
+            src="/images/sa_nostra_cuina_logo_squared.png"
             alt="Logo sa nostra cuina"
-            height={32}
-            width={32}
+            height={64}
+            width={64}
           />
-          <h1 className="text-2xl font-bold text-mint">Sa nostra cuina</h1>
+          <h1 className="text-2xl font-bold text-oliveGreen">
+            Sa nostra cuina
+          </h1>
         </div>
         <div>
           {user ? (
@@ -36,7 +39,7 @@ const HomePage = () => {
           ) : (
             <button
               onClick={() => router.push('/auth')}
-              className="px-4 py-2 text-white bg-mint rounded hover:bg-opacity-80 focus:outline-none"
+              className="px-4 py-2 text-white bg-oliveGreen rounded hover:bg-opacity-80 focus:outline-none"
             >
               Iniciar Sesión
             </button>
@@ -45,7 +48,7 @@ const HomePage = () => {
       </nav>
 
       {/* Bienvenida */}
-      <header className="flex flex-col items-center justify-center bg-mint text-gray-600 shadow-md rounded mx-6 my-4 p-8 text-center">
+      <header className="flex flex-col items-center justify-center bg-oliveGreen text-gray-600 shadow-md rounded mx-6 my-4 p-8 text-center">
         <h2 className="text-4xl font-bold mb-4">
           Bienvenido a Sa nostra cuina
         </h2>
