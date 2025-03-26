@@ -5,6 +5,8 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { AuthProvider } from '../context/authContext'
+import { RecipesProvider } from '../context/recipesContext'
 
 export const metadata: Metadata = {
   title: 'Sa nostra cuina',
@@ -28,7 +30,11 @@ export default async function RootLayout({
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <AuthProvider>
+            <RecipesProvider>{children}</RecipesProvider>
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

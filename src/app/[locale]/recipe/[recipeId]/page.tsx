@@ -3,8 +3,8 @@
 import { useRouter, useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { exampleRecipes } from '@/data/mockRecipes'
-import { Recipe } from '@/types'
+import { Recipe } from '@/app/types'
+import { exampleRecipes } from '@/app/data/mockRecipes'
 
 const RecipeDetail = () => {
   const { recipeId } = useParams()

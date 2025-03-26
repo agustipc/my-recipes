@@ -2,11 +2,9 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { supabase } from '../../lib/supabaseClient'
-import { useRouter } from 'next/navigation'
+import useAuth from '@/app/hooks/useAuth'
 
 const AuthPage = () => {
-  const router = useRouter()
   const [isLoginTab, setIsLoginTab] = useState(true)
 
   const [loginEmail, setLoginEmail] = useState('')
@@ -17,31 +15,29 @@ const AuthPage = () => {
   const [signupPassword, setSignupPassword] = useState('')
   const [signupError, setSignupError] = useState('')
 
+  const { login, signup } = useAuth()
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoginError('')
-    const { error } = await supabase.auth.signInWithPassword({
-      email: loginEmail,
-      password: loginPassword
-    })
-    if (error) {
-      setLoginError('Correo o contraseña incorrectos.')
-    } else {
-      router.push('/')
+
+    try {
+      await login(loginEmail, loginPassword)
+    } catch (error) {
+      console.error(error)
+      setLoginError('Credenciales incorrectas')
     }
   }
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setSignupError('')
-    const { error } = await supabase.auth.signUp({
-      email: signupEmail,
-      password: signupPassword
-    })
-    if (error) {
-      setSignupError('No se pudo registrar. Intenta con otro correo.')
-    } else {
-      router.push('/')
+
+    try {
+      await signup(signupEmail, signupPassword)
+    } catch (error) {
+      console.error(error)
+      setSignupError('Error al registrar usuario')
     }
   }
 

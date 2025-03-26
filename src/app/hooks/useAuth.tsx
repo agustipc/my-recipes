@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { getSupabaseClient } from '../lib/supabaseClient'
-import { User } from '@supabase/supabase-js'
+import { useAuthContext } from '../context/authContext'
+import { useRouter } from '../../i18n/navigation'
 
 const useAuth = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const { state, dispatch } = useAuthContext()
   const [supabase, setSupabase] = useState<ReturnType<
     typeof getSupabaseClient
   > | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const checkSupabase = async () => {
@@ -33,7 +35,11 @@ const useAuth = () => {
     const fetchUser = async () => {
       try {
         const { data } = await supabase.auth.getSession()
-        setUser(data.session?.user || null)
+        if (data.session?.user) {
+          dispatch({ type: 'SET_USER', payload: data.session.user })
+        } else {
+          dispatch({ type: 'CLEAR_USER' })
+        }
       } catch (error) {
         console.error('Supabase error:', error)
       }
@@ -43,24 +49,56 @@ const useAuth = () => {
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null)
+      if (session?.user) {
+        dispatch({ type: 'SET_USER', payload: session.user })
+      } else {
+        dispatch({ type: 'CLEAR_USER' })
+      }
     })
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [supabase, dispatch])
 
   const logout = async () => {
     const { error } = await supabase!.auth.signOut()
     if (error) {
       console.error('Error al cerrar sesión:', error.message)
     } else {
-      setUser(null)
+      dispatch({ type: 'CLEAR_USER' })
     }
   }
 
-  return { user, logout }
+  const login = async (email: string, password: string) => {
+    if (!supabase) throw new Error('Supabase client not available')
+    const { data, error } = await supabase?.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) throw error
+    if (data.session?.user) {
+      dispatch({ type: 'SET_USER', payload: data.session.user })
+      router.replace('/')
+    }
+  }
+
+  const signup = async (email: string, password: string) => {
+    if (!supabase) throw new Error('Supabase client not available')
+    const { data, error } = await supabase?.auth.signUp({
+      email,
+      password
+    })
+
+    if (error) throw error
+    if (data.session?.user) {
+      dispatch({ type: 'SET_USER', payload: data.session.user })
+      router.replace('/')
+    }
+  }
+
+  return { user: state.user, logout, login, signup }
 }
 
 export default useAuth
