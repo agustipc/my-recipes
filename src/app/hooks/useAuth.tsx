@@ -80,6 +80,7 @@ const useAuth = () => {
     if (error) throw error
     if (data.session?.user) {
       dispatch({ type: 'SET_USER', payload: data.session.user })
+      document.cookie = `is_logged_in=true; path=/; SameSite=Lax; max-age=3600`
       router.replace('/')
     }
   }
