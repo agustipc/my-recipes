@@ -4,23 +4,24 @@ import { useRouter, useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Recipe } from '@/app/types'
-import { exampleRecipes } from '@/app/data/mockRecipes'
+import { useRecipesContext } from '@/app/context/recipesContext'
 
 const RecipeDetail = () => {
   const { recipeId } = useParams()
   const router = useRouter()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
+  const { state } = useRecipesContext()
 
   useEffect(() => {
-    const foundRecipe = exampleRecipes.find((recipe) => recipe.id === recipeId)
+    const found = state.recipes.find((r) => r.id === recipeId)
 
-    if (!foundRecipe) {
+    if (!found) {
       router.push('/')
       return
     }
 
-    setRecipe(foundRecipe)
-  }, [recipeId, router])
+    setRecipe(found)
+  }, [recipeId, router, state.recipes])
 
   if (!recipe) {
     return (
@@ -33,10 +34,7 @@ const RecipeDetail = () => {
   return (
     <div className="min-h-screen bg-cream p-4 md:p-8">
       {/* Barra decorativa superior */}
-      <div
-        className="w-16 h-2 mx-auto mb-6 rounded-full"
-        style={{ backgroundColor: recipe.bgColor }}
-      ></div>
+      <div className="w-16 h-2 mx-auto mb-6 rounded-full bg-slate-400"></div>
 
       <button
         onClick={() => router.push('/')}
@@ -50,7 +48,7 @@ const RecipeDetail = () => {
         <div className="relative w-full h-64 md:h-auto md:w-1/2 rounded-md overflow-hidden">
           <Image
             src={recipe.image_url || 'https://via.placeholder.com/600'}
-            alt={recipe.title}
+            alt={recipe.recipe_translations[0].title}
             fill
             className="object-cover"
             priority
@@ -60,13 +58,12 @@ const RecipeDetail = () => {
         {/* Contenido */}
         <div className="flex-1 mt-4 md:mt-0 md:ml-8">
           <h1 className="flex items-center text-3xl font-bold text-gray-900 mb-4">
-            {recipe.title}
-            <span
-              className="ml-4 w-4 h-4 rounded-full"
-              style={{ backgroundColor: recipe.bgColor }}
-            ></span>
+            {recipe.recipe_translations[0].title}
+            <span className="ml-4 w-4 h-4 rounded-full bg-slate-700"></span>
           </h1>
-          <p className="text-gray-600 mb-6">{recipe.description}</p>
+          <p className="text-gray-600 mb-6">
+            {recipe.recipe_translations[0].description}
+          </p>
 
           {/* Ingredientes */}
           <div className="mb-6">
@@ -74,9 +71,10 @@ const RecipeDetail = () => {
               Ingredientes
             </h2>
             <ul className="list-disc list-inside text-gray-600 space-y-2">
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.recipe_ingredients.map((ingredient, index) => (
                 <li key={index}>
-                  {ingredient.name} - {ingredient.quantity}
+                  {ingredient.ingredient.ingredient_translations[0].name} -{' '}
+                  {ingredient.quantity}
                 </li>
               ))}
             </ul>
@@ -87,8 +85,8 @@ const RecipeDetail = () => {
       <div className="max-w-5xl mt-8 mx-auto bg-white shadow-md rounded-md p-4 md:p-8">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">Pasos</h2>
         <ol className="list-decimal list-inside text-gray-600 space-y-2">
-          {recipe.steps.map((step, index) => (
-            <li key={index}>{step}</li>
+          {recipe.recipe_steps.map((step, index) => (
+            <li key={index}>{step.instruction}</li>
           ))}
         </ol>
       </div>

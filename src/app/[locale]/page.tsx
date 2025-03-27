@@ -2,13 +2,20 @@
 
 import Image from 'next/image'
 import useAuth from '../hooks/useAuth'
-import { exampleRecipes } from '../data/mockRecipes'
 import RecipeCard from '../components/RecipeCard'
 import { useRouter } from '../../i18n/navigation'
+import { useRecipesContext } from '../context/recipesContext'
+import useRecipes from '../hooks/useRecipes'
 
 const HomePage = () => {
   const { user, logout } = useAuth()
   const router = useRouter()
+  const { state } = useRecipesContext()
+
+  useRecipes()
+
+  const { recipes } = state
+
   return (
     <div className="font-sans min-h-screen bg-cream flex flex-col">
       {/* Navbar */}
@@ -63,11 +70,13 @@ const HomePage = () => {
       </header>
 
       {/* Grid de recetas */}
-      <main className="grid gap-6 p-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
-        {exampleRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} {...recipe} />
-        ))}
-      </main>
+      {recipes?.length > 0 && (
+        <main className="grid gap-6 p-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+          {recipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+        </main>
+      )}
 
       {/* Footer */}
       <footer className="mt-12 text-center py-4 bg-gray-200">
