@@ -1,34 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { getSupabaseClient } from '../lib/supabaseClient'
+import { useEffect } from 'react'
 import { useAuthContext } from '../context/authContext'
 import { useRouter } from '../../i18n/navigation'
 import toast from 'react-hot-toast'
+import { supabase } from '../lib/supabaseClient'
 
 const useAuth = () => {
-  const { state, dispatch } = useAuthContext()
-  const [supabase, setSupabase] = useState<ReturnType<
-    typeof getSupabaseClient
-  > | null>(null)
   const router = useRouter()
-
-  useEffect(() => {
-    const checkSupabase = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
-        )
-        if (!response.ok) throw new Error('Supabase not available')
-        setSupabase(getSupabaseClient())
-      } catch (error) {
-        console.warn('Supabase error:', error)
-        setSupabase(null)
-      }
-    }
-
-    checkSupabase()
-  }, [])
+  const { state, dispatch } = useAuthContext()
 
   useEffect(() => {
     if (!supabase) return

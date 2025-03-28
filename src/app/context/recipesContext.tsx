@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, useReducer, useContext } from 'react'
+import { createContext, useReducer, useContext, useEffect } from 'react'
 import type { RecipesAction, RecipesState } from '../types'
+import useRecipes from '../hooks/useRecipes'
 
 const RecipesContext = createContext<{
   state: RecipesState
@@ -28,6 +29,15 @@ export const RecipesProvider = ({
   children: React.ReactNode
 }) => {
   const [state, dispatch] = useReducer(recipesReducer, { recipes: [] })
+  const { fetchRecipes } = useRecipes()
+
+  useEffect(() => {
+    const load = async () => {
+      const recipes = await fetchRecipes()
+      dispatch({ type: 'SET_RECIPES', payload: recipes })
+    }
+    load()
+  }, [])
 
   return (
     <RecipesContext.Provider value={{ state, dispatch }}>

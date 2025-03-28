@@ -5,14 +5,11 @@ import useAuth from '../hooks/useAuth'
 import RecipeCard from '../components/RecipeCard'
 import { useRouter } from '../../i18n/navigation'
 import { useRecipesContext } from '../context/recipesContext'
-import useRecipes from '../hooks/useRecipes'
 
 const HomePage = () => {
   const { user, logout } = useAuth()
   const router = useRouter()
   const { state } = useRecipesContext()
-
-  useRecipes()
 
   const { recipes } = state
 
